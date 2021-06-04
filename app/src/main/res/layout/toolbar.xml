@@ -14,10 +14,37 @@
         <ImageButton
             android:layout_width="55.93dp"
             android:layout_height="31.17dp"
-            android:layout_marginRight="8dp"
             android:layout_gravity="center"
             android:background="@drawable/humber_menu" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/toolbar_back"
+        android:visibility="gone"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|left"
+        android:gravity="center">
 
+        <ImageButton
+            android:layout_width="57dp"
+            android:layout_height="39dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_back" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/toolbar_search"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <ImageButton
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_search" />
+    </LinearLayout>
 </FrameLayout>
