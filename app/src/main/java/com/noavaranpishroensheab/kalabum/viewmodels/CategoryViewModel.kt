@@ -13,14 +13,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CategoryViewModel(application: Application) : AndroidViewModel(application) {
-    lateinit var mCategories: MutableLiveData<CategoryResponse>
+
+   //lateinit var mCategories:MutableLiveData<CategoryResponse>
 
     val mApi by lazy {
         RetrofitInstance.create()
     }
 
     fun getCategories(token: String): MutableLiveData<CategoryResponse> {
-        mCategories = MutableLiveData()
+       // mCategories = MutableLiveData()
 
         mApi.categories(token).enqueue(object : Callback<CategoryResponse> {
             override fun onResponse(
@@ -28,16 +29,16 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
                 response: Response<CategoryResponse>
             ) {
                 if (response.isSuccessful) {
-                    mCategories.value = response.body()!!
+                  //  mCategories.value = response.body()!!
 
                 } else {
-                    mCategories.value = null
+                  //  mCategories.value = null
                     call.cancel()
                 }
             }
 
             override fun onFailure(call: Call<CategoryResponse>, t: Throwable) {
-                mCategories.value = null
+              //  mCategories.value = null
                 call.cancel()
             }
 
@@ -46,7 +47,7 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
 
 
 
-        return mCategories
+        return MutableLiveData()
     }
 
 

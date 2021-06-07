@@ -22,6 +22,7 @@ data class CategoriesData(
 )
 
 data class Categories(
+    var isExapnded: Boolean,
     @SerializedName("image")
     val image: String,
 
