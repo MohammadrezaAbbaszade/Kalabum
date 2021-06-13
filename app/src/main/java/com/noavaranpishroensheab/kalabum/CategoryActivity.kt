@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.noavaranpishroensheab.kalabum.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -14,10 +14,16 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class CategoryActivity : AppCompatActivity() {
     lateinit var categoryViewModel: CategoryViewModel
+    lateinit var queris: HashMap<String, Int>
+
 
     companion object {
-        fun newIntent(context: Context): Intent {
+        private val IS_SUB_CATEGORY = "isSubCategory"
+        private val PARENT_ID = "parentId"
+        fun newIntent(context: Context, isSubCategory: Boolean, parentId: Int): Intent {
             val intent = Intent(context, CategoryActivity::class.java)
+            intent.putExtra(IS_SUB_CATEGORY, isSubCategory)
+            intent.putExtra(PARENT_ID, parentId)
             return intent
         }
     }
@@ -32,42 +38,62 @@ class CategoryActivity : AppCompatActivity() {
         toolbar_back.setOnClickListener {
             finish()
         }
-//        category_root_view.visibility = View.GONE
-//        category_progressbar.visibility = View.VISIBLE
-
-        // categoryViewModel.getCategories(SharePreferenceData.getToken(this).toString())
-        (category_recyclerView.getItemAnimator() as SimpleItemAnimator).supportsChangeAnimations =
-            false
-        var list = mutableListOf<Categories>()
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        list.add(Categories(false, "fdfdf", 5, "fsdfsfsd"))
-        category_recyclerView.adapter = CategoryAdapter(this, list)
+        toolbar_sub_back.setOnClickListener {
+            finish()
+        }
+        category_root_view.visibility = View.GONE
+        category_progressbar.visibility = View.VISIBLE
 
 
-//        categoryViewModel.mCategories?.observe(this, Observer<CategoryResponse> {
-//
-//            if (it != null) {
-//                category_root_view.visibility = View.VISIBLE
-//                category_progressbar.visibility = View.GONE
-//
-//                category_recyclerView.adapter = CategoryAdapter(this, it.data.categories)
-//
-//            } else {
-//                category_progressbar.visibility = View.GONE
-//            }
-//
-//        })
+        if (intent.getBooleanExtra(IS_SUB_CATEGORY, false)) {
+            queris = HashMap()
+            queris.put("parent_id", intent.getIntExtra(PARENT_ID, 0))
+
+            categoryViewModel.getSubCategories(
+                SharePreferenceData.getToken(this).toString(),
+                queris
+            )
+        } else {
+            categoryViewModel.getCategories(SharePreferenceData.getToken(this).toString())
+        }
+        categoryViewModel.mCategories?.observe(this, Observer<CategoryResponse> {
+
+            if (it != null) {
+                category_root_view.visibility = View.VISIBLE
+                category_progressbar.visibility = View.GONE
+                var categoryAdapter = CategoryAdapter(this, true, it.data.categories)
+                categoryAdapter.setOnClickListener(object : CategoryAdapter.SubCategoryClicked {
+                    override fun clicked(parentId: Int) {
+                        val intent = newIntent(this@CategoryActivity, true, parentId)
+                        startActivity(intent)
+                    }
+
+                })
+                category_recyclerView.adapter = categoryAdapter
+
+
+            } else {
+                category_progressbar.visibility = View.GONE
+            }
+
+        })
+
+
+
+        categoryViewModel.mSubCategories?.observe(this, Observer<CategoryResponse> {
+
+            if (it != null) {
+                category_root_view.visibility = View.VISIBLE
+                category_progressbar.visibility = View.GONE
+                var categoryAdapter = CategoryAdapter(this, false, it.data.categories)
+
+                category_recyclerView.adapter = categoryAdapter
+
+            } else {
+                category_progressbar.visibility = View.GONE
+            }
+
+        })
 
     }
 

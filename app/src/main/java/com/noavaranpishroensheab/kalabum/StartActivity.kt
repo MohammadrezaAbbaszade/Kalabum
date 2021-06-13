@@ -19,7 +19,7 @@ class StartActivity : AppCompatActivity() {
         if (SharePreferenceData.getToken(this) == null) {
             SharePreferenceData.setToken(
                 this,
-                "bearer " + "2|TwdOKlDq2bGuUgP0vvYE1YxBeNxqNjm25uNbD8Kj"
+                "Bearer " + "2|TwdOKlDq2bGuUgP0vvYE1YxBeNxqNjm25uNbD8Kj"
             )
             val intent = LoginActivity.newIntent(this)
             startActivity(intent)

@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         categories.setOnClickListener {
-            val intent = CategoryActivity.newIntent(this)
+            val intent = CategoryActivity.newIntent(this,false,0)
             startActivity(intent)
         }
 

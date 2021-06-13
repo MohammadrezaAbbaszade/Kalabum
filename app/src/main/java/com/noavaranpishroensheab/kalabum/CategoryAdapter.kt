@@ -9,7 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.category_items.view.*
 
 
-class CategoryAdapter(val context: Context, var categories: List<Categories>) :
+class CategoryAdapter(
+    val context: Context,
+    var isCategory: Boolean,
+    var categories: List<Categories>,
+    var subCategoryClicked: SubCategoryClicked? = null
+) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
 
@@ -26,33 +31,36 @@ class CategoryAdapter(val context: Context, var categories: List<Categories>) :
         holder.bind(categories.get(position))
         holder.itemView.pipes_and_faucets.setOnClickListener {
 
+            if (!isCategory) {
+                var expanded = categories.get(position).isExapnded
 
-            var expanded = categories.get(position).isExapnded
+                categories.get(position).isExapnded = !expanded
 
-            categories.get(position).isExapnded = !expanded
-
-            // Notify the adapter that item has changed
-            notifyItemChanged(position);
+                // Notify the adapter that item has changed
+                notifyItemChanged(position);
+            } else {
+                subCategoryClicked?.clicked(categories.get(position).id)
+            }
 
 
         }
     }
 
+    interface SubCategoryClicked {
+        fun clicked(parentId: Int)
+    }
+
+    fun setOnClickListener(listener: SubCategoryClicked) {
+        this.subCategoryClicked = listener
+    }
 
     class ViewHolder(private val view: View, val context: Context) : RecyclerView.ViewHolder(view) {
 
-        fun bind(int: Int) {
-            view.setOnClickListener {
-
-
-            }
-        }
 
         fun bind(categories: Categories) {
-            with(view){
+            with(view) {
                 val expanded: Boolean = categories.isExapnded
-                // Set the visibility based on state
-                // Set the visibility based on state
+                category_item_txt.text = categories.name
                 category_sub_root_view.setVisibility(if (expanded) View.VISIBLE else View.GONE)
             }
 

@@ -20,6 +20,11 @@ interface Api {
     @POST("register")
     fun signUp(@Header("Authorization") token: String, @Body signUp: SignUp): Call<SignUpResponse>
 
-    @GET("categories/list'")
+
+    @GET("categories/list")
     fun categories(@Header("Authorization") token: String): Call<CategoryResponse>
+
+
+    @GET("categories/list")
+    fun subCategories(@Header("Authorization") token: String, @QueryMap parentId: HashMap<String, Int>): Call<CategoryResponse>
 }
