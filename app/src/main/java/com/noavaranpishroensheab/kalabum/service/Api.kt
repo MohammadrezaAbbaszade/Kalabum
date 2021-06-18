@@ -18,7 +18,14 @@ interface Api {
 
 
     @POST("register")
-    fun signUp(@Header("Authorization") token: String, @Body signUp: SignUp): Call<SignUpResponse>
+    @FormUrlEncoded
+    fun signUp(
+        @Header("Authorization") token: String,
+        @Field("phone_number") phoneNumber: String,
+        @Field("first_name") firstName: String,
+        @Field("last_name") lastName: String,
+        @Field("password") password: String
+    ): Call<SignUpResponse>
 
 
     @GET("categories/list")
@@ -26,5 +33,8 @@ interface Api {
 
 
     @GET("categories/list")
-    fun subCategories(@Header("Authorization") token: String, @QueryMap parentId: HashMap<String, Int>): Call<CategoryResponse>
+    fun subCategories(
+        @Header("Authorization") token: String,
+        @QueryMap parentId: HashMap<String, Int>
+    ): Call<CategoryResponse>
 }

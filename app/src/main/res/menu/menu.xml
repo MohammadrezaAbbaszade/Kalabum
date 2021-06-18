@@ -1,0 +1,46 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/my_requests"
+        android:title="درخواست های من">
+
+    </item>
+
+    <item
+        android:id="@+id/my_pre_invoices"
+        android:title="پیش فاکتورهای من">
+
+    </item>
+    <item
+        android:id="@+id/my_invoices"
+        android:title="فاکتورهای من">
+
+    </item>
+    <item
+        android:id="@+id/categories"
+        android:title="دسته بندی ها">
+
+    </item>
+    <item
+        android:id="@+id/discount_code"
+        android:title="کد تخفیف">
+
+    </item>
+    <item
+        android:id="@+id/messages"
+        android:title="پیام ها">
+
+    </item>
+    <item
+        android:id="@+id/teaching"
+        android:title="آموزش">
+
+    </item>
+    <item
+        android:id="@+id/about_us"
+        android:title="درباره سامانه">
+
+    </item>
+</menu>

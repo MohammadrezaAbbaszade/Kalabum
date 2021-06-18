@@ -31,7 +31,10 @@ class LoginActivity : AppCompatActivity() {
 
         password_edit_txt.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD;
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-
+        sign_up_btn.setOnClickListener {
+            val intent = SignUpActivity.newIntent(this)
+            startActivity(intent)
+        }
         login_btn.setOnClickListener {
 
 
@@ -48,15 +51,18 @@ class LoginActivity : AppCompatActivity() {
                 if (it != null) {
                     if (it.success) {
                         SharePreferenceData.setToken(this, "bearer " + it.data.token)
+                        SharePreferenceData.setLoginResult(this, true)
                         Toast.makeText(this, "ورود شما با موفقیت انجام شد", Toast.LENGTH_LONG).show()
                         val intent = MainActivity.newIntent(this)
                         startActivity(intent)
                         finish()
                     } else {
                         Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                        SharePreferenceData.setLoginResult(this, false)
                     }
                 } else {
                     Toast.makeText(this, "خطای برقراری ارتباط!", Toast.LENGTH_LONG).show()
+                    SharePreferenceData.setLoginResult(this, false)
                 }
 
             })

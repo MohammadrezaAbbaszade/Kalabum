@@ -16,7 +16,7 @@ class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (SharePreferenceData.getToken(this) == null) {
+        if (SharePreferenceData.getLoginResult(this) == false) {
             SharePreferenceData.setToken(
                 this,
                 "Bearer " + "2|TwdOKlDq2bGuUgP0vvYE1YxBeNxqNjm25uNbD8Kj"

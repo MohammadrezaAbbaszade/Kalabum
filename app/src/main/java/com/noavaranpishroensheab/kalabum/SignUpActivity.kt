@@ -30,11 +30,17 @@ class SignUpActivity : AppCompatActivity() {
         loginViewModel.mSignUp?.observe(this, Observer<SignUpResponse> {
             if (it != null) {
                 if (it.success) {
-
+                    SharePreferenceData.setLoginResult(this, true)
+                    Toast.makeText(this, "ثبت نام شما با موفقیت انجام شد", Toast.LENGTH_LONG).show()
+                    val intent = MainActivity.newIntent(this)
+                    startActivity(intent)
+                    finish()
                 } else {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    SharePreferenceData.setLoginResult(this, false)
+                    Toast.makeText(this, it.data.phone_number.get(0), Toast.LENGTH_LONG).show()
                 }
             } else {
+                SharePreferenceData.setLoginResult(this, false)
                 Toast.makeText(this, "خطای برقراری ارتباط!", Toast.LENGTH_LONG).show()
             }
 
@@ -80,7 +86,7 @@ class SignUpActivity : AppCompatActivity() {
                         signup_phone_number_edit_txt.text.trim().toString(),
                         signup_first_number_edit_txt.text.trim().toString(),
                         signup_last_number_edit_txt.text.trim().toString(),
-                        password_edit_txt.text.trim().toString()
+                        signup_password_edit_txt.text.trim().toString()
                     )
                 )
 
