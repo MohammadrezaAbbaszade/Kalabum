@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@+id/apply_pelak" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/apply_add_address_btn"
             android:layout_width="342dp"
             android:layout_height="51.32dp"
             android:layout_marginTop="12dp"
@@ -140,18 +140,22 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/sub_pipes_and_faucets1"
+            android:id="@+id/apply_order_map"
             android:layout_width="342dp"
             android:layout_height="160dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/round_button_1"
             android:gravity="center"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/apply_add_address_btn">
 
-
+            <org.neshan.mapsdk.MapView
+                android:id="@+id/apply_order_sub_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

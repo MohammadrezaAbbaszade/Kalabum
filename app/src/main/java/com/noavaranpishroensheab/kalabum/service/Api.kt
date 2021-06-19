@@ -1,9 +1,6 @@
 package com.noavaranpishroensheab.kalabum.service
 
-import com.noavaranpishroensheab.kalabum.CategoryResponse
-import com.noavaranpishroensheab.kalabum.LoginResponse
-import com.noavaranpishroensheab.kalabum.SignUp
-import com.noavaranpishroensheab.kalabum.SignUpResponse
+import com.noavaranpishroensheab.kalabum.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -37,4 +34,9 @@ interface Api {
         @Header("Authorization") token: String,
         @QueryMap parentId: HashMap<String, Int>
     ): Call<CategoryResponse>
+
+
+
+    @GET("categories/{id}/filters")
+    fun subCategoriesOptions(@Header("Authorization") token: String,@Path("id")  productId:Int): Call<SubCategoriesResponse>
 }

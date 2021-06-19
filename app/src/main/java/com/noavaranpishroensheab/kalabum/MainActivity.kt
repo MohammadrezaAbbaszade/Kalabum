@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        registered_invoices.setOnClickListener {
+            val intent = ApplyOrderActivity.newIntent(this)
+            startActivity(intent)
+        }
         categories.setOnClickListener {
             val intent = CategoryActivity.newIntent(this, false, 0)
             startActivity(intent)

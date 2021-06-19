@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.noavaranpishroensheab.kalabum">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -27,7 +29,12 @@
         <activity android:name=".SignUpActivity">
 
         </activity>
+        <activity android:name=".AddLabelActivity">
 
+        </activity>
+        <activity android:name=".ApplyOrderActivity">
+
+        </activity>
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
