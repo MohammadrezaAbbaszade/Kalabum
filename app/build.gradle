@@ -49,6 +49,7 @@ dependencies {
     implementation 'neshan-android-sdk:mobile-sdk:1.0.0'
     implementation 'neshan-android-sdk:services-sdk:1.0.0'
     implementation 'neshan-android-sdk:common-sdk:0.0.1'
+    implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
