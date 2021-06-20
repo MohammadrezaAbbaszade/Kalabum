@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.category_items.view.*
 import kotlinx.android.synthetic.main.sub_category_options_item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 
 class CategoryActivity : AppCompatActivity() {
@@ -47,7 +49,7 @@ class CategoryActivity : AppCompatActivity() {
         toolbar_sub_back.setOnClickListener {
             finish()
         }
-        category_root_view.visibility = View.GONE
+        category_recyclerView.visibility = View.GONE
         category_progressbar.visibility = View.VISIBLE
 
 
@@ -65,7 +67,7 @@ class CategoryActivity : AppCompatActivity() {
         categoryViewModel.mCategories?.observe(this, Observer<CategoryResponse> {
 
             if (it != null) {
-                category_root_view.visibility = View.VISIBLE
+                category_recyclerView.visibility = View.VISIBLE
                 category_progressbar.visibility = View.GONE
                 var categoryAdapter = CategoryAdapter(this, true, false, it.data.categories)
                 categoryAdapter.setOnClickListener(object : CategoryAdapter.SubCategoryClicked {
@@ -76,7 +78,7 @@ class CategoryActivity : AppCompatActivity() {
 
                     override fun subClicked(id: Int) {
                         categoryViewModel.getSubCategoriesOptions(
-                            SharePreferenceData.getToken(this@CategoryActivity).toString(), id
+                            SharePreferenceData.getToken(this@CategoryActivity).toString(), 21
                         )
                     }
 
@@ -94,7 +96,7 @@ class CategoryActivity : AppCompatActivity() {
         categoryViewModel.mSubCategories?.observe(this, Observer<CategoryResponse> {
 
             if (it != null) {
-                category_root_view.visibility = View.VISIBLE
+                category_recyclerView.visibility = View.VISIBLE
                 category_progressbar.visibility = View.GONE
                 categoryAdapter = CategoryAdapter(this, false, false, it.data.categories)
                 categoryAdapter.setOnClickListener(object : CategoryAdapter.SubCategoryClicked {
@@ -102,7 +104,6 @@ class CategoryActivity : AppCompatActivity() {
                     }
 
                     override fun subClicked(id: Int) {
-
                         categoryViewModel.getSubCategoriesOptions(
                             SharePreferenceData.getToken(this@CategoryActivity).toString(), id
                         )
@@ -116,7 +117,8 @@ class CategoryActivity : AppCompatActivity() {
 
                                     categoryAdapter.isCategoryOption = true
                                     categoryAdapter.isCategory = false
-                                    categoryAdapter.setSunCategoryOptionData(it.data)
+                                    EventBus.getDefault().postSticky(it.data)
+                                    //  categoryAdapter.setSunCategoryOptionData(it.data)
 
                                 } else {
                                     Toast.makeText(
@@ -151,6 +153,7 @@ class CategoryActivity : AppCompatActivity() {
         var categories: List<Categories>,
         var subCategoryClicked: SubCategoryClicked? = null
     ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+
         lateinit var subCategoryOptionData: SubCategoriesData
         lateinit var holder: ViewHolder
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -167,20 +170,30 @@ class CategoryActivity : AppCompatActivity() {
             holder.itemView.pipes_and_faucets.setOnClickListener {
 
                 if (!isCategory) {
-                    if (!isCategoryOption) {
-                        var expanded = categories.get(position).isExapnded
 
+                    if (!isCategoryOption && !categories.get(position).isExapnded) {
+                        holder.itemView.sub_category_progress_bar.visibility=View.VISIBLE
+                        holder.itemView.sub_category_recyclerView.visibility=View.GONE
+                        var expanded = categories.get(position).isExapnded
                         categories.get(position).isExapnded = !expanded
-                        this.holder=holder
                         subCategoryClicked?.subClicked(categories.get(position).id)
                         // Notify the adapter that item has changed
-                        notifyItemChanged(position);
+                        notifyItemChanged(position)
 
+
+                    }else if (!categories.get(position).isExapnded){
+                        holder.itemView.sub_category_progress_bar.visibility=View.VISIBLE
+                        holder.itemView.sub_category_recyclerView.visibility=View.GONE
+                        var expanded = categories.get(position).isExapnded
+                        categories.get(position).isExapnded = !expanded
+                        subCategoryClicked?.subClicked(categories.get(position).id)
+                        // Notify the adapter that item has changed
+                        notifyItemChanged(position)
                     } else {
-                        holder.itemView.sub_category_progress_bar.visibility = View.GONE
-                        holder.itemView.sub_category_recyclerView.adapter =
-                            SubCategoryOptionAdapter(context, subCategoryOptionData)
-
+                        isCategoryOption=false
+                        var expanded = categories.get(position).isExapnded
+                        categories.get(position).isExapnded = !expanded
+                        notifyItemChanged(position)
                     }
                 } else {
                     subCategoryClicked?.clicked(categories.get(position).id)
@@ -199,15 +212,12 @@ class CategoryActivity : AppCompatActivity() {
             this.subCategoryClicked = listener
         }
 
-        fun setSunCategoryOptionData(subCategoryOptionData: SubCategoriesData) {
-            this.subCategoryOptionData = subCategoryOptionData
-            holder.itemView.sub_category_progress_bar.visibility = View.GONE
-            holder.itemView.sub_category_recyclerView.adapter =
-                SubCategoryOptionAdapter(context, subCategoryOptionData)
-        }
 
         class ViewHolder(private val view: View, val context: Context) :
             RecyclerView.ViewHolder(view) {
+            init {
+                EventBus.getDefault().register(this)
+            }
 
 
             fun bind(categories: Categories) {
@@ -218,6 +228,16 @@ class CategoryActivity : AppCompatActivity() {
                 }
 
 
+            }
+
+            @Subscribe
+            fun onDataRecieved(subCategoryOptionData: SubCategoriesData) {
+                with(view) {
+                    sub_category_progress_bar.visibility = View.GONE
+                    sub_category_recyclerView.visibility = View.VISIBLE
+                    sub_category_recyclerView.adapter =
+                        SubCategoryOptionAdapter(context, subCategoryOptionData)
+                }
             }
 
 

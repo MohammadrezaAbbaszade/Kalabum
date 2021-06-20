@@ -49,6 +49,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -78,7 +79,7 @@ public class AddLabelActivity extends AppCompatActivity {
     final int BASE_MAP_INDEX = 0;
     private MapView map;
     private Label label;
-    private Button focusOnUserLocationBtn;
+    private FloatingActionButton focusOnUserLocationBtn;
     private Location userLocation;
     private FusedLocationProviderClient fusedLocationClient;
     private SettingsClient settingsClient;
@@ -112,15 +113,15 @@ public class AddLabelActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         getLocationPermission();
-//        initLayoutReferences();
-//        initLocation();
-//        startReceivingLocationUpdates();
+        initLayoutReferences();
+        initLocation();
+        startReceivingLocationUpdates();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-      //  stopLocationUpdates();
+        stopLocationUpdates();
     }
 
     @Override
