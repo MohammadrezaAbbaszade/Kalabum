@@ -3,17 +3,16 @@ package com.noavaranpishroensheab.kalabum
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_apply_order.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ApplyOrderActivity : AppCompatActivity() {
+class AddAddressActivity : AppCompatActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, ApplyOrderActivity::class.java)
+            val intent = Intent(context, AddAddressActivity::class.java)
             return intent
         }
     }

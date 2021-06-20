@@ -32,7 +32,7 @@
         <activity android:name=".AddLabelActivity">
 
         </activity>
-        <activity android:name=".ApplyOrderActivity">
+        <activity android:name=".AddAddressActivity">
 
         </activity>
         <activity android:name=".StartActivity">
