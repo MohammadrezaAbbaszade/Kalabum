@@ -188,6 +188,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <Button
+        android:id="@+id/submit_order"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#0089D1"

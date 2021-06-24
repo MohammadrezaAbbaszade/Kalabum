@@ -37,6 +37,10 @@ class AddAddressActivity : AppCompatActivity() {
         toolbar_sub_back.setOnClickListener {
             finish()
         }
+        submit_order.setOnClickListener {
+            val intent = Intent(this, OrderStatusActivity::class.java)
+            startActivity(intent)
+        }
         apply_add_address_btn.setOnClickListener {
             val intent = Intent(this, AddLabelActivity::class.java)
             startActivityForResult(intent, ACTIVITY_RESULT_CODE)
