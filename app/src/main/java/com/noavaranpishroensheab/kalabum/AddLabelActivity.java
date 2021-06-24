@@ -14,14 +14,18 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.carto.graphics.Color;
 import com.carto.styles.AnimationStyle;
@@ -86,27 +90,60 @@ public class AddLabelActivity extends AppCompatActivity {
     private LocationRequest locationRequest;
     private LocationSettingsRequest locationSettingsRequest;
     private LocationCallback locationCallback;
+    private boolean firstCameraMove = false;
+    private boolean firstMapClicked = false;
     private String lastUpdateTime;
     // boolean flag to toggle the ui
     private Boolean mRequestingLocationUpdates;
     private Marker marker;
-
-
+    private Button submitButton;
+    private ImageView locationLabel;
+    private AddAddressViewModel addAddressViewModel;
+    private ProgressBar progressBar;
     LatLng latLng;
 
     VectorElementVector userMarkerLayer;
     VectorElementVector markerLayer;
     VectorElementVector lineLayer;
     VectorElementVector polygonLayer;
+    private static final String ADDRESS_FOR_RESULT = "address";
+    private static final String LATITUDE_FOR_RESULT = "latitude";
+    private static final String LONGITUDE_FOR_RESULT = "longitude";
+
+
+    public static String getAddressForResult() {
+        return ADDRESS_FOR_RESULT;
+    }
+
+    public static String getLatitudeForResult() {
+        return LATITUDE_FOR_RESULT;
+    }
+
+    public static String getLongitudeForResult() {
+        return LONGITUDE_FOR_RESULT;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // starting app in full screen
+        addAddressViewModel = ViewModelProviders.of(this).get(AddAddressViewModel.class);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_label);
+        progressBar = findViewById(R.id.add_label_progressbar);
+        addAddressViewModel.getAddress().observe(this, neshanAddress -> {
+            if (neshanAddress != null) {
+                Intent intent = new Intent();
+                intent.putExtra(ADDRESS_FOR_RESULT, neshanAddress.getFormattedAddress());
+                intent.putExtra(LATITUDE_FOR_RESULT, latLng.getLatitude());
+                intent.putExtra(LONGITUDE_FOR_RESULT, latLng.getLongitude());
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+
+        });
     }
 
     @Override
@@ -138,13 +175,32 @@ public class AddLabelActivity extends AppCompatActivity {
         initMap();
 
         map.setOnMapClickListener(latLng -> {
-            map.addMarker(createMarker(latLng));
+            if (!firstMapClicked) {
+                map.addMarker(createMarker(latLng, false));
+                AddLabelActivity.this.latLng = latLng;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                });
+                addAddressViewModel.getAddress(latLng);
+                firstMapClicked = true;
+            }
         });
         // when on marker clicked, change marker style to blue
 
     }
 
-    private Marker createMarker(LatLng loc) {
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            map.dispatchTouchEvent(event);
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private Marker createMarker(LatLng loc, boolean userLocation) {
         // Creating animation for marker. We should use an object of type AnimationStyleBuilder, set
         // all animation features on it and then call buildStyle() method that returns an object of type
         // AnimationStyle
@@ -159,7 +215,13 @@ public class AddLabelActivity extends AppCompatActivity {
         // and then call buildStyle method on it. This method returns an object of type MarkerStyle
         MarkerStyleBuilder markStCr = new MarkerStyleBuilder();
         markStCr.setSize(30f);
-        markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_marker)));
+        if (userLocation) {
+            markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_marker)));
+
+        } else {
+            markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_location_red)));
+
+        }
         // AnimationStyle object - that was created before - is used here
         markStCr.setAnimationStyle(animStBl.buildStyle());
         MarkerStyle markSt = markStCr.buildStyle();
@@ -299,7 +361,13 @@ public class AddLabelActivity extends AppCompatActivity {
 
     private void onLocationChange() {
         if (userLocation != null) {
-            createMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            if (!firstCameraMove) {
+                LatLng LatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+                map.moveCamera(LatLng, 0);
+                map.setZoom(15, 0.25f);
+                firstCameraMove = true;
+            }
+            map.addMarker(createMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), true));
         }
     }
 
@@ -308,6 +376,7 @@ public class AddLabelActivity extends AppCompatActivity {
             LatLng LatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
             map.moveCamera(LatLng, 0);
             map.setZoom(15, 0.25f);
+            map.addMarker(createMarker(LatLng, true));
         }
     }
 

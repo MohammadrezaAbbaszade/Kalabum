@@ -39,4 +39,9 @@ interface Api {
 
     @GET("categories/{id}/filters")
     fun subCategoriesOptions(@Header("Authorization") token: String,@Path("id")  productId:Int): Call<SubCategoriesResponse>
+
+
+    @Headers("Api-Key: service.rYbt2x21jJ8rg4FkUithMcD5H8Kdaf37hYFCCTsQ")
+    @GET("/v2/reverse")
+    fun getReverse(@Query("lat") lat: Double, @Query("lng") lng: Double): Call<NeshanAddress>
 }
