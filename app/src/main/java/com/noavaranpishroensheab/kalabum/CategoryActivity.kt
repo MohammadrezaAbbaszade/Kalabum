@@ -105,7 +105,7 @@ class CategoryActivity : AppCompatActivity() {
 
                     override fun subClicked(id: Int) {
                         categoryViewModel.getSubCategoriesOptions(
-                            SharePreferenceData.getToken(this@CategoryActivity).toString(), id
+                            SharePreferenceData.getToken(this@CategoryActivity).toString(), 21
                         )
 
                         categoryViewModel.mSubCategoriesOptions?.observe(

@@ -25,7 +25,9 @@
         <activity android:name=".CategoryActivity">
 
         </activity>
+        <activity android:name=".OrderStatusDetailActivity">
 
+        </activity>
         <activity android:name=".SignUpActivity">
 
         </activity>

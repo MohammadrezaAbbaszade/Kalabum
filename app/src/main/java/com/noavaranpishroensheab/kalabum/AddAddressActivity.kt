@@ -38,7 +38,7 @@ class AddAddressActivity : AppCompatActivity() {
             finish()
         }
         submit_order.setOnClickListener {
-            val intent = Intent(this, OrderStatusActivity::class.java)
+            val intent = OrderStatusActivity.newIntent(this)
             startActivity(intent)
         }
         apply_add_address_btn.setOnClickListener {

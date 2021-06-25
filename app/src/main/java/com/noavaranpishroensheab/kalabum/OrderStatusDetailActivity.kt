@@ -5,14 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_order_status.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class OrderStatusActivity : AppCompatActivity() {
+class OrderStatusDetailActivity : AppCompatActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, OrderStatusActivity::class.java)
+            val intent = Intent(context, OrderStatusDetailActivity::class.java)
             return intent
         }
     }
@@ -20,7 +19,8 @@ class OrderStatusActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_status)
+        setContentView(R.layout.activity_order_status_detail)
+
         toolbar_back.visibility = View.VISIBLE
         toolbar_menu.visibility = View.GONE
         toolbar_back.setOnClickListener {
@@ -29,15 +29,7 @@ class OrderStatusActivity : AppCompatActivity() {
         toolbar_sub_back.setOnClickListener {
             finish()
         }
-        first_order_status.setOnClickListener {
-            val intent = OrderStatusDetailActivity.newIntent(this)
-            startActivity(intent)
-        }
 
-        second_order_status.setOnClickListener {
-            val intent = OrderStatusDetailActivity.newIntent(this)
-            startActivity(intent)
-        }
 
     }
 
