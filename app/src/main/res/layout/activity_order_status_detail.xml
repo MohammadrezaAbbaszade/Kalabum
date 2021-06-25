@@ -67,9 +67,9 @@
         android:id="@+id/ready_factor_info"
         android:layout_width="342dp"
         android:layout_height="28dp"
-        android:visibility="gone"
         android:layout_marginTop="3dp"
         android:background="#727272"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_status_detail_title">
@@ -98,10 +98,13 @@
 
 
     <LinearLayout
+        android:id="@+id/coming_soon_factor_item_view"
         android:layout_width="342dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
+        android:visibility="gone"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ready_factor_info">
@@ -110,6 +113,7 @@
             android:id="@+id/pipes_and_faucets"
             android:layout_width="342dp"
             android:layout_height="51.32dp"
+            android:layout_gravity="center"
             android:background="#0089D1"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -191,6 +195,130 @@
                 android:textColor="#FFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ready_factor_item_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ready_factor_info">
+
+        <LinearLayout
+            android:id="@+id/ready_factor_product_title"
+            android:layout_width="342dp"
+            android:layout_height="51.32dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_button_1"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/ready_factor_item_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="لوله پلی اتیلن سایز 160 میلی لیتر"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="168dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_1"
+                android:gravity="center"
+                android:text="1250 شاخه"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="168dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_1"
+                android:gravity="center"
+                android:text="متری 12"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="168dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_1"
+                android:gravity="center"
+                android:text="متری 12"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="168dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_1"
+                android:gravity="center"
+                android:text="PE80"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="342dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/round_button_2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:text="دارای 10 سال بیمه"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -344,11 +472,11 @@
 
     <LinearLayout
         android:id="@+id/ready_factor_bottom_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -363,7 +491,7 @@
 
             <LinearLayout
                 android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -394,7 +522,7 @@
 
             <LinearLayout
                 android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"

@@ -30,12 +30,12 @@ class OrderStatusActivity : AppCompatActivity() {
             finish()
         }
         first_order_status.setOnClickListener {
-            val intent = OrderStatusDetailActivity.newIntent(this)
+            val intent = OrderStatusDetailActivity.newIntent(this,1)
             startActivity(intent)
         }
 
         second_order_status.setOnClickListener {
-            val intent = OrderStatusDetailActivity.newIntent(this)
+            val intent = OrderStatusDetailActivity.newIntent(this,2)
             startActivity(intent)
         }
 
