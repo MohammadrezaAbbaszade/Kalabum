@@ -23,7 +23,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         registered_invoices.setOnClickListener {
-            val intent = AddAddressActivity.newIntent(this)
+            val intent = FactorListActivity.newIntent(this)
+            startActivity(intent)
+        }
+        track_preinvoices.setOnClickListener {
+            val intent = InvoiceListActivity.newIntent(this)
+            startActivity(intent)
+        }
+        view_requests.setOnClickListener {
+            val intent = OrderStatusActivity.newIntent(this)
             startActivity(intent)
         }
         categories.setOnClickListener {

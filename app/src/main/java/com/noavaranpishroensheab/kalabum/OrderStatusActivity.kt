@@ -38,7 +38,10 @@ class OrderStatusActivity : AppCompatActivity() {
             val intent = OrderStatusDetailActivity.newIntent(this,2)
             startActivity(intent)
         }
-
+        third_order_status.setOnClickListener {
+            val intent = OrderStatusDetailActivity.newIntent(this,3)
+            startActivity(intent)
+        }
     }
 
 

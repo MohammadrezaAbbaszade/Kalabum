@@ -26,6 +26,7 @@ class InvoiceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invoice_list)
         toolbar_back.visibility = View.VISIBLE
+        toolbar_menu.visibility = View.GONE
         toolbar_back.setOnClickListener {
             finish()
         }
@@ -33,7 +34,7 @@ class InvoiceListActivity : AppCompatActivity() {
             finish()
         }
 
-        invoice_list_recycler.adapter = InvoiceAdapter(this, 10)
+        invoice_list_recycler.adapter = InvoiceAdapter(this, 20)
 
 
     }
@@ -56,6 +57,10 @@ class InvoiceListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(position)
+            holder.itemView.setOnClickListener {
+                val intent = OrderStatusDetailActivity.newIntent(context,2)
+                context.startActivity(intent)
+            }
         }
 
 
@@ -65,6 +70,8 @@ class InvoiceListActivity : AppCompatActivity() {
 
             fun bind(item: Int) {
                 with(view) {
+
+
                 }
 
 

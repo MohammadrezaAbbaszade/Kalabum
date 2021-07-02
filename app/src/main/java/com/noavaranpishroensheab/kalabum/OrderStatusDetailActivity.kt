@@ -31,16 +31,31 @@ class OrderStatusDetailActivity : AppCompatActivity() {
         toolbar_sub_back.setOnClickListener {
             finish()
         }
+        ready_factor_submit_order_btn.setOnClickListener {
+            val intent = AcceptFactorActivity.newIntent(this)
+            startActivity(intent)
+
+        }
+        ready_factor_edit_order_btn.setOnClickListener {
+            val intent = EditingOrderActivity.newIntent(this)
+            startActivity(intent)
+        }
         when (type) {
             1 -> {
-                ready_factor_info.visibility=View.VISIBLE
+                ready_factor_info.visibility = View.VISIBLE
                 ready_factor_item_view.visibility = View.VISIBLE
                 ready_factor_bottom_view.visibility = View.VISIBLE
             }
 
-            2->{
-                coming_soon_factor_item_view.visibility=View.VISIBLE
-                comming_soon_factor_bottom_view.visibility=View.VISIBLE
+            2 -> {
+                coming_soon_factor_item_view.visibility = View.VISIBLE
+                comming_soon_factor_bottom_view.visibility = View.VISIBLE
+            }
+            3 -> {
+
+                end_factor_info.visibility = View.VISIBLE
+                ready_factor_item_view.visibility = View.VISIBLE
+                end_factor_bottom_view.visibility = View.VISIBLE
             }
 
         }

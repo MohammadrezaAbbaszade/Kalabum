@@ -28,6 +28,24 @@
         <activity android:name=".OrderStatusDetailActivity">
 
         </activity>
+        <activity android:name=".FactorListActivity">
+
+        </activity>
+        <activity android:name=".InvoiceListActivity">
+
+        </activity>
+        <activity android:name=".EditingOrderActivity">
+
+        </activity>
+        <activity android:name=".RegisterPaymentReceiptActivity">
+
+        </activity>
+        <activity android:name=".AcceptFactorActivity">
+
+        </activity>
+        <activity android:name=".FinalPaymentActivity">
+
+        </activity>
         <activity android:name=".SignUpActivity">
 
         </activity>

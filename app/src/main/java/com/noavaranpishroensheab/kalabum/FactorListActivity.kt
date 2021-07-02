@@ -24,7 +24,7 @@ class FactorListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_factor_list)
-
+        toolbar_menu.visibility = View.GONE
         toolbar_back.visibility = View.VISIBLE
         toolbar_back.setOnClickListener {
             finish()
@@ -33,7 +33,7 @@ class FactorListActivity : AppCompatActivity() {
             finish()
         }
 
-        factor_list_recycler.adapter = FactorAdapter(this, 10)
+        factor_list_recycler.adapter = FactorAdapter(this, 20)
 
 
     }
@@ -56,6 +56,10 @@ class FactorListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(position)
+            holder.itemView.setOnClickListener {
+                val intent = OrderStatusDetailActivity.newIntent(context,1)
+                context.startActivity(intent)
+            }
         }
 
 

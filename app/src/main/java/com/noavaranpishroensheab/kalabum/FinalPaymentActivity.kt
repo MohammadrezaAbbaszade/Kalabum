@@ -22,6 +22,7 @@ class FinalPaymentActivity  : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_final_payment)
         toolbar_back.visibility = View.VISIBLE
+        toolbar_menu.visibility = View.GONE
         toolbar_back.setOnClickListener {
             finish()
         }
