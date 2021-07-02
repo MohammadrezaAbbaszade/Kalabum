@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/editing_order_detail_title"
+        android:layout_width="342dp"
+        android:layout_height="58dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <LinearLayout
+            android:layout_width="253dp"
+            android:layout_height="58dp"
+            android:background="#555555"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="اصلاح درخواست شماره"
+                android:textAlignment="center"
+                android:textColor="#FFF"
+
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="89dp"
+            android:layout_height="58dp"
+            android:background="#555555"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="101"
+                android:textAlignment="center"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editing_order_detail_title">
+
+
+        <LinearLayout
+            android:id="@+id/coming_soon_factor_item_view"
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/pipes_and_faucets"
+                android:layout_width="342dp"
+                android:layout_height="51.32dp"
+                android:layout_gravity="center"
+                android:background="#0089D1"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/category_item_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="لوله پلی اتیلن سایز 160 میلی لیتر"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="9dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:background="#B5B5B5"
+                    android:gravity="center"
+                    android:text="1250 شاخه"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:background="#B5B5B5"
+                    android:gravity="center"
+                    android:text="متری 12"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:background="#B5B5B5"
+                    android:gravity="center"
+                    android:text="متری 12"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:background="#B5B5B5"
+                    android:gravity="center"
+                    android:text="PE80"
+                    android:textAlignment="center"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_close_two" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="342dp"
+        android:layout_height="51.32dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:background="#0089D1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.25"
+            android:text="محصول جدید را وارد کنید..."
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/ic_add_product"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#00B14F"
+        android:text="ارسال اصلاحیه"
+        android:textColor="#FFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
