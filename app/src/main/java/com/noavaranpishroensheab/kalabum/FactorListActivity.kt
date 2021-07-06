@@ -7,11 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.noavaranpishroensheab.kalabum.response.DataX
+import com.noavaranpishroensheab.kalabum.response.FactorListResponse
+import com.noavaranpishroensheab.kalabum.viewmodels.CategoryViewModel
+import com.noavaranpishroensheab.kalabum.viewmodels.FactorListViewModel
 import kotlinx.android.synthetic.main.activity_factor_list.*
+import kotlinx.android.synthetic.main.factor_item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class FactorListActivity : AppCompatActivity() {
+    lateinit var factorListViewModel: FactorListViewModel
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -24,6 +32,7 @@ class FactorListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_factor_list)
+        factorListViewModel = ViewModelProviders.of(this).get(FactorListViewModel::class.java)
         toolbar_menu.visibility = View.GONE
         toolbar_back.visibility = View.VISIBLE
         toolbar_back.setOnClickListener {
@@ -33,15 +42,26 @@ class FactorListActivity : AppCompatActivity() {
             finish()
         }
 
-        factor_list_recycler.adapter = FactorAdapter(this, 20)
+        //  factor_list_recycler.adapter = FactorAdapter(this, 20)
 
 
+        factorListViewModel.getFactorList(SharePreferenceData.getToken(this).toString())
+
+
+        factorListViewModel.mFactors.observe(this, Observer<FactorListResponse> {
+
+            if (it != null) {
+                val factorAdapter = FactorAdapter(this, it.data.requests.data)
+                factor_list_recycler.adapter = factorAdapter
+            }
+
+        })
     }
 
 
     class FactorAdapter(
         val context: Context,
-        var item: Int
+        val factors: List<DataX>
     ) : RecyclerView.Adapter<FactorAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,13 +71,13 @@ class FactorListActivity : AppCompatActivity() {
         }
 
         override fun getItemCount(): Int {
-            return item
+            return factors.size
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(position)
+            holder.bind(factors.get(position))
             holder.itemView.setOnClickListener {
-                val intent = OrderStatusDetailActivity.newIntent(context,1)
+                val intent = OrderStatusDetailActivity.newIntent(context, 1)
                 context.startActivity(intent)
             }
         }
@@ -67,8 +87,9 @@ class FactorListActivity : AppCompatActivity() {
             RecyclerView.ViewHolder(view) {
 
 
-            fun bind(item: Int) {
+            fun bind(item: DataX) {
                 with(view) {
+                    factor_item_id.text = item.id.toString()
                 }
 
 

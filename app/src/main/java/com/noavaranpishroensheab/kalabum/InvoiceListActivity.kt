@@ -7,12 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.noavaranpishroensheab.kalabum.response.FactorListResponse
+import com.noavaranpishroensheab.kalabum.response.InvoiceListDataX
+import com.noavaranpishroensheab.kalabum.response.InvoiceListResponse
+import com.noavaranpishroensheab.kalabum.viewmodels.FactorListViewModel
+import com.noavaranpishroensheab.kalabum.viewmodels.InvoiceListViewModel
+import kotlinx.android.synthetic.main.activity_factor_list.*
 import kotlinx.android.synthetic.main.activity_invoice_list.*
+import kotlinx.android.synthetic.main.invoice_item.view.*
 import kotlinx.android.synthetic.main.sub_category_options_item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class InvoiceListActivity : AppCompatActivity() {
+    lateinit var invoiceListViewModel: InvoiceListViewModel
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -25,6 +35,7 @@ class InvoiceListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invoice_list)
+        invoiceListViewModel = ViewModelProviders.of(this).get(InvoiceListViewModel::class.java)
         toolbar_back.visibility = View.VISIBLE
         toolbar_menu.visibility = View.GONE
         toolbar_back.setOnClickListener {
@@ -34,15 +45,28 @@ class InvoiceListActivity : AppCompatActivity() {
             finish()
         }
 
-        invoice_list_recycler.adapter = InvoiceAdapter(this, 20)
 
+
+        invoiceListViewModel.getInvoiceList(SharePreferenceData.getToken(this).toString())
+
+
+        invoiceListViewModel.mInvoices.observe(this, Observer<InvoiceListResponse> {
+
+
+            if (it != null) {
+                var invoiceAdapter = InvoiceAdapter(this, it.data.requests.data)
+                invoice_list_recycler.adapter = invoiceAdapter
+            }
+
+
+        })
 
     }
 
 
     class InvoiceAdapter(
         val context: Context,
-        var item: Int
+        var invoiceList: List<InvoiceListDataX>
     ) : RecyclerView.Adapter<InvoiceAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,13 +76,13 @@ class InvoiceListActivity : AppCompatActivity() {
         }
 
         override fun getItemCount(): Int {
-            return item
+            return invoiceList.size
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(position)
+            holder.bind(invoiceList.get(position))
             holder.itemView.setOnClickListener {
-                val intent = OrderStatusDetailActivity.newIntent(context,2)
+                val intent = OrderStatusDetailActivity.newIntent(context, 2)
                 context.startActivity(intent)
             }
         }
@@ -68,9 +92,9 @@ class InvoiceListActivity : AppCompatActivity() {
             RecyclerView.ViewHolder(view) {
 
 
-            fun bind(item: Int) {
+            fun bind(item: InvoiceListDataX) {
                 with(view) {
-
+                    invoice_item_id.text = item.id.toString()
 
                 }
 

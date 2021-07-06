@@ -1,5 +1,7 @@
 package com.noavaranpishroensheab.kalabum.service
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -7,16 +9,21 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 object RetrofitInstance {
     val BASE_URL = "http://app.kalabela.ir/api/v1/"
     val MAP_BASE_URL="https://api.neshan.org/"
     lateinit var retrofitInstance: Retrofit
     val okHttpClient = OkHttpClient.Builder()
     val logging = HttpLoggingInterceptor()
+    lateinit var gson: Gson
 
     init {
         logging.level = HttpLoggingInterceptor.Level.BODY
         okHttpClient.addInterceptor(logging)
+         gson = GsonBuilder()
+            .setLenient()
+            .create()
         okHttpClient.addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val request =
@@ -30,7 +37,7 @@ object RetrofitInstance {
     fun create(): Api {
         retrofitInstance = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient.build())
             .build()
         return retrofitInstance.create(Api::class.java)

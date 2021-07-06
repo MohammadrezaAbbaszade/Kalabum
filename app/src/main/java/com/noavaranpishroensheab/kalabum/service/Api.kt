@@ -1,6 +1,10 @@
 package com.noavaranpishroensheab.kalabum.service
 
 import com.noavaranpishroensheab.kalabum.*
+import com.noavaranpishroensheab.kalabum.response.FactorDetailResponse
+import com.noavaranpishroensheab.kalabum.response.FactorListResponse
+import com.noavaranpishroensheab.kalabum.response.InvoiceDetailResponse
+import com.noavaranpishroensheab.kalabum.response.InvoiceListResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -36,12 +40,34 @@ interface Api {
     ): Call<CategoryResponse>
 
 
-
     @GET("categories/{id}/filters")
-    fun subCategoriesOptions(@Header("Authorization") token: String,@Path("id")  productId:Int): Call<SubCategoriesResponse>
+    fun subCategoriesOptions(
+        @Header("Authorization") token: String,
+        @Path("id") productId: Int
+    ): Call<SubCategoriesResponse>
 
 
     @Headers("Api-Key: service.rYbt2x21jJ8rg4FkUithMcD5H8Kdaf37hYFCCTsQ")
     @GET("/v2/reverse")
     fun getReverse(@Query("lat") lat: Double, @Query("lng") lng: Double): Call<NeshanAddress>
+
+    @GET("invoices")
+    fun getFactors(@Header("Authorization") token: String): Call<FactorListResponse>
+
+
+    @GET("invoices/{id}")
+    fun getInvoiceDetail(
+        @Header("Authorization") token: String,
+        @Path("id") invoiceId: Int
+    ): Call<FactorDetailResponse>
+
+    @GET("pre-invoices")
+    fun getPreInvoices(@Header("Authorization") token: String): Call<InvoiceListResponse>
+
+
+    @GET("pre-invoices/{id}")
+    fun getPreInvoiceDetail(
+        @Header("Authorization") token: String,
+        @Path("id") invoiceId: Int
+    ): Call<InvoiceDetailResponse>
 }
