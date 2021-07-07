@@ -77,7 +77,7 @@ class FactorListActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(factors.get(position))
             holder.itemView.setOnClickListener {
-                val intent = OrderStatusDetailActivity.newIntent(context, 1)
+                val intent = OrderStatusDetailActivity.newIntent(context, 1,factors.get(position).id)
                 context.startActivity(intent)
             }
         }

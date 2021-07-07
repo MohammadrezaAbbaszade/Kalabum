@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.mLogin?.observe(this, Observer<LoginResponse> {
                 if (it != null) {
                     if (it.success) {
-                        SharePreferenceData.setToken(this, "bearer " + it.data.token)
+                        SharePreferenceData.setToken(this, "Bearer " + it.data.token)
                         SharePreferenceData.setLoginResult(this, true)
                         Toast.makeText(this, "ورود شما با موفقیت انجام شد", Toast.LENGTH_LONG).show()
                         val intent = MainActivity.newIntent(this)

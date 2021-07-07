@@ -35,6 +35,7 @@ class InvoiceListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invoice_list)
+        invoice_list_progressbar.visibility=View.VISIBLE
         invoiceListViewModel = ViewModelProviders.of(this).get(InvoiceListViewModel::class.java)
         toolbar_back.visibility = View.VISIBLE
         toolbar_menu.visibility = View.GONE
@@ -54,6 +55,7 @@ class InvoiceListActivity : AppCompatActivity() {
 
 
             if (it != null) {
+                invoice_list_progressbar.visibility=View.GONE
                 var invoiceAdapter = InvoiceAdapter(this, it.data.requests.data)
                 invoice_list_recycler.adapter = invoiceAdapter
             }
@@ -82,7 +84,7 @@ class InvoiceListActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(invoiceList.get(position))
             holder.itemView.setOnClickListener {
-                val intent = OrderStatusDetailActivity.newIntent(context, 2)
+                val intent = OrderStatusDetailActivity.newIntent(context,2, invoiceList.get(position).id)
                 context.startActivity(intent)
             }
         }

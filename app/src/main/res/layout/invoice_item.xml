@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="فاکتور شماره"
+                android:text="پیش فاکتور شماره"
                 android:textAlignment="center"
                 android:textColor="#FFF"
 

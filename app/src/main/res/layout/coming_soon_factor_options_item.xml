@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="rtl"
+    android:layout_marginTop="9dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/coming_soon_factor_item_option_name"
+            android:layout_width="168dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:background="#B5B5B5"
+            android:gravity="center"
+            android:text="1250 شاخه"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/coming_soon_factor_item_option_order"
+            android:layout_width="168dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:background="#B5B5B5"
+            android:gravity="center"
+            android:text="متری 12"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
