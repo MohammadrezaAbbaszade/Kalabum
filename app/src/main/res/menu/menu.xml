@@ -19,7 +19,7 @@
 
     </item>
     <item
-        android:id="@+id/categories"
+        android:id="@+id/my_categories"
         android:title="دسته بندی ها">
 
     </item>

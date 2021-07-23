@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.noavaranpishroensheab.kalabum.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
+import kotlinx.android.synthetic.main.activity_show_product.*
 import kotlinx.android.synthetic.main.category_items.view.*
 import kotlinx.android.synthetic.main.sub_category_options_item.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -104,33 +105,8 @@ class CategoryActivity : AppCompatActivity() {
                     }
 
                     override fun subClicked(id: Int) {
-                        categoryViewModel.getSubCategoriesOptions(
-                            SharePreferenceData.getToken(this@CategoryActivity).toString(), 21
-                        )
-
-                        categoryViewModel.mSubCategoriesOptions?.observe(
-                            this@CategoryActivity,
-                            Observer<SubCategoriesResponse> {
-
-
-                                if (it.success) {
-
-                                    categoryAdapter.isCategoryOption = true
-                                    categoryAdapter.isCategory = false
-                                    EventBus.getDefault().postSticky(it.data)
-                                    //  categoryAdapter.setSunCategoryOptionData(it.data)
-
-                                } else {
-                                    Toast.makeText(
-                                        this@CategoryActivity,
-                                        it.message,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-
-                            })
-
-
+                        val intent = ShowProductActivity.newIntent(this@CategoryActivity, 21)
+                        startActivity(intent)
                     }
 
                 })
@@ -170,31 +146,8 @@ class CategoryActivity : AppCompatActivity() {
             holder.itemView.pipes_and_faucets.setOnClickListener {
 
                 if (!isCategory) {
-
-                    if (!isCategoryOption && !categories.get(position).isExapnded) {
-                        holder.itemView.sub_category_progress_bar.visibility=View.VISIBLE
-                        holder.itemView.sub_category_recyclerView.visibility=View.GONE
-                        var expanded = categories.get(position).isExapnded
-                        categories.get(position).isExapnded = !expanded
-                        subCategoryClicked?.subClicked(categories.get(position).id)
-                        // Notify the adapter that item has changed
-                        notifyItemChanged(position)
-
-
-                    }else if (!categories.get(position).isExapnded){
-                        holder.itemView.sub_category_progress_bar.visibility=View.VISIBLE
-                        holder.itemView.sub_category_recyclerView.visibility=View.GONE
-                        var expanded = categories.get(position).isExapnded
-                        categories.get(position).isExapnded = !expanded
-                        subCategoryClicked?.subClicked(categories.get(position).id)
-                        // Notify the adapter that item has changed
-                        notifyItemChanged(position)
-                    } else {
-                        isCategoryOption=false
-                        var expanded = categories.get(position).isExapnded
-                        categories.get(position).isExapnded = !expanded
-                        notifyItemChanged(position)
-                    }
+                    subCategoryClicked?.subClicked(categories.get(position).id)
+                    notifyItemChanged(position)
                 } else {
                     subCategoryClicked?.clicked(categories.get(position).id)
                 }
@@ -215,65 +168,11 @@ class CategoryActivity : AppCompatActivity() {
 
         class ViewHolder(private val view: View, val context: Context) :
             RecyclerView.ViewHolder(view) {
-            init {
-                EventBus.getDefault().register(this)
-            }
 
 
             fun bind(categories: Categories) {
                 with(view) {
-                    val expanded: Boolean = categories.isExapnded
                     category_item_txt.text = categories.name
-                    category_sub_root_view.setVisibility(if (expanded) View.VISIBLE else View.GONE)
-                }
-
-
-            }
-
-            @Subscribe
-            fun onDataRecieved(subCategoryOptionData: SubCategoriesData) {
-                with(view) {
-                    sub_category_progress_bar.visibility = View.GONE
-                    sub_category_recyclerView.visibility = View.VISIBLE
-                    sub_category_recyclerView.adapter =
-                        SubCategoryOptionAdapter(context, subCategoryOptionData)
-                }
-            }
-
-
-        }
-
-
-    }
-
-
-    class SubCategoryOptionAdapter(
-        val context: Context,
-        var subCategoryOptionData: SubCategoriesData
-    ) : RecyclerView.Adapter<SubCategoryOptionAdapter.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(context)
-                .inflate(R.layout.sub_category_options_item, parent, false)
-            return ViewHolder(view, context)
-        }
-
-        override fun getItemCount(): Int {
-            return subCategoryOptionData.items.size
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(subCategoryOptionData.items.get(position))
-        }
-
-
-        class ViewHolder(private val view: View, val context: Context) :
-            RecyclerView.ViewHolder(view) {
-
-
-            fun bind(item: Item) {
-                with(view) {
-                    sub_category_option_name.text = item.name
                 }
 
 

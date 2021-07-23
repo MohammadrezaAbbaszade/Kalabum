@@ -55,7 +55,8 @@ class OrderStatusDetailViewModel(application: Application) : AndroidViewModel(ap
 
 
     fun getFactorDetail(token: String, id: Int): MutableLiveData<FactorDetailResponse> {
-
+        mInvoiceDetailInfo = MutableLiveData()
+        mFactorDetailInfo = MutableLiveData()
 
         mApi.getInvoiceDetail(token, id).enqueue(object : Callback<FactorDetailResponse> {
 

@@ -63,7 +63,25 @@ class MainActivity : AppCompatActivity() {
             NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
+                    R.id.my_pre_invoices -> {
+                        val intent = InvoiceListActivity.newIntent(this@MainActivity)
+                        startActivity(intent)
+                    }
 
+                    R.id.my_invoices -> {
+                        val intent = FactorListActivity.newIntent(this@MainActivity)
+                        startActivity(intent)
+                    }
+
+                    R.id.my_categories ->{
+                        val intent = CategoryActivity.newIntent(this@MainActivity, false, 0)
+                        startActivity(intent)
+                    }
+
+                    R.id.my_requests->{
+                        val intent = OrderStatusActivity.newIntent(this@MainActivity)
+                        startActivity(intent)
+                    }
                 }
 
                 return true

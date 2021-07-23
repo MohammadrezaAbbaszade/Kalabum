@@ -32,15 +32,19 @@ data class Invoice(
     @SerializedName("offline_payments")
     val offlinePayments: List<Any>,
     @SerializedName("online_payments")
-    val onlinePayments: List<OnlinePayment>,
+    val onlinePayments: List<Any>,
     @SerializedName("payment_method")
     val paymentMethod: Int,
+    @SerializedName("payment_url")
+    val paymentUrl: String,
     @SerializedName("pre_payment")
     val prePayment: Int,
     @SerializedName("sms_text")
     val smsText: String,
     @SerializedName("status")
     val status: String,
+    @SerializedName("total_price")
+    val totalPrice: Int,
     @SerializedName("type")
     val type: String,
     @SerializedName("updated_at")
@@ -65,9 +69,9 @@ data class Item(
     @SerializedName("invoice_id")
     val invoiceId: Int,
     @SerializedName("notes")
-    val notes: Any,
+    val notes: String,
     @SerializedName("options")
-    val options: Options,
+    val options: List<Any>,
     @SerializedName("price_per_unit")
     val pricePerUnit: Int,
     @SerializedName("product")
@@ -80,39 +84,11 @@ data class Item(
     val updatedAt: String
 )
 
-data class OnlinePayment(
-    @SerializedName("amount")
-    val amount: Int,
-    @SerializedName("authorize")
-    val authorize: String,
-    @SerializedName("date_time")
-    val dateTime: String,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("invoice_id")
-    val invoiceId: Int,
-    @SerializedName("pan")
-    val pan: String,
-    @SerializedName("RRN")
-    val rRN: Any,
-    @SerializedName("success")
-    val success: Boolean,
-    @SerializedName("verified")
-    val verified: Boolean
-)
-
-data class Options(
-    @SerializedName("1")
-    val x1: String,
-    @SerializedName("2")
-    val x2: String
-)
-
 data class Product(
     @SerializedName("category_id")
     val categoryId: Int,
     @SerializedName("description")
-    val description: String,
+    val description: Any,
     @SerializedName("id")
     val id: Int,
     @SerializedName("images")

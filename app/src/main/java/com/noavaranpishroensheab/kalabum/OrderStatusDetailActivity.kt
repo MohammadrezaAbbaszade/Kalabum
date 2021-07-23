@@ -10,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.noavaranpishroensheab.kalabum.response.InvoiceDetailItem
-import com.noavaranpishroensheab.kalabum.response.InvoiceDetailOption
-import com.noavaranpishroensheab.kalabum.response.InvoiceDetailProduct
-import com.noavaranpishroensheab.kalabum.response.InvoiceListDataX
+import com.noavaranpishroensheab.kalabum.response.*
+import com.noavaranpishroensheab.kalabum.response.Item
 import com.noavaranpishroensheab.kalabum.viewmodels.InvoiceListViewModel
 import com.noavaranpishroensheab.kalabum.viewmodels.OrderStatusDetailViewModel
 import kotlinx.android.synthetic.main.activity_order_status_detail.*
@@ -89,13 +87,14 @@ class OrderStatusDetailActivity : AppCompatActivity() {
 
             if (it != null) {
                 order_status_detail_progressbar.visibility = View.GONE
-                order_status_detail_title.visibility=View.VISIBLE
+                order_status_detail_title.visibility = View.VISIBLE
                 ready_factor_bottom_view.visibility = View.VISIBLE
                 ready_factor_info.visibility = View.VISIBLE
 
                 expired_normal_text.text = it.data.invoice.validUntil
                 order_status_detail_main_title_number.text = it.data.invoice.id.toString()
                 order_status_detail_main_title.text = "پیش فاکتور"
+                activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
                 order_status_recycler.adapter = InvoiceAdapter(this, it.data.invoice.items)
             }
 
@@ -107,7 +106,14 @@ class OrderStatusDetailActivity : AppCompatActivity() {
 
             if (it != null) {
                 order_status_detail_progressbar.visibility = View.GONE
-                comming_soon_factor_bottom_view.visibility = View.VISIBLE
+                order_status_detail_title.visibility = View.VISIBLE
+                ready_factor_bottom_view.visibility = View.VISIBLE
+                order_status_detail_main_title_number.text = it.data.invoice.id.toString()
+                order_status_detail_main_title.text = "فاکتور"
+                activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
+                order_status_recycler.adapter = InvoiceAdapter(this, null, it.data.invoice.items)
+
+
             }
 
 
@@ -118,7 +124,8 @@ class OrderStatusDetailActivity : AppCompatActivity() {
 
     class InvoiceAdapter(
         val context: Context,
-        var invoiceList: List<InvoiceDetailItem>
+        var invoiceList: List<InvoiceDetailItem>? = null,
+        var factorList: List<Item>? = null
     ) : RecyclerView.Adapter<InvoiceAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -128,11 +135,20 @@ class OrderStatusDetailActivity : AppCompatActivity() {
         }
 
         override fun getItemCount(): Int {
-            return invoiceList.size
+            if (invoiceList != null) {
+                return invoiceList!!.size
+            } else {
+                return factorList!!.size
+            }
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(invoiceList.get(position), invoiceList)
+            if (invoiceList != null) {
+                holder.bind(invoiceList!!.get(position), invoiceList!!)
+            } else {
+                holder.bind(factorList!!.get(position), factorList!!)
+            }
+
             holder.itemView.setOnClickListener {
 
             }
@@ -155,13 +171,33 @@ class OrderStatusDetailActivity : AppCompatActivity() {
                             context,
                             item.count,
                             item.unit,
-                            item.options
+                            item.product.options,
+                            null
                         )
                 }
 
 
             }
 
+            fun bind(item: Item, invoiceList: List<Item>) {
+                with(view) {
+                    invoice_detail_item_product_name.text = item.product.name
+                    invoice_detail_item_note.text = item.notes.toString()
+                    invoice_detail_item_price_per_unit.text = item.pricePerUnit.toString()
+                    invoice_detail_item_total_price.text =
+                        (item.count * item.pricePerUnit).toString()
+                    invoice_detail_item_recycler.adapter =
+                        InvoiceOptionsAdapter(
+                            context,
+                            item.count,
+                            item.unit,
+                            null,
+                            item.product.options
+                        )
+                }
+
+
+            }
 
         }
 
@@ -173,8 +209,8 @@ class OrderStatusDetailActivity : AppCompatActivity() {
         val context: Context,
         var count: Int,
         var unit: String,
-        var options: List<Any>
-
+        var invoiceOptions: List<InvoiceDetailOption>? = null,
+        var factorOptions: List<Option>? = null
     ) : RecyclerView.Adapter<InvoiceOptionsAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -184,20 +220,40 @@ class OrderStatusDetailActivity : AppCompatActivity() {
         }
 
         override fun getItemCount(): Int {
-            if (options.isNotEmpty()) {
-                return options.size
+            if (invoiceOptions != null) {
+                return invoiceOptions?.size?.plus(1)!!
             } else {
-                return 1
+                return factorOptions?.size?.plus(1)!!
+            }
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return when (position) {
+                0 -> {
+                    1
+                }
+
+                else -> {
+                    2
+                }
             }
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            if (options.isNotEmpty()) {
-                holder.bind(options.get(position))
-            } else {
-                holder.bind(count, unit)
-            }
 
+            when (holder.itemViewType) {
+                1 -> {
+                    holder.bind(count, unit)
+                }
+                2 -> {
+                    if (factorOptions != null && position - 1 < factorOptions?.size!!) {
+                        holder.bind(factorOptions?.get(position - 1)!!)
+                    } else if (invoiceOptions != null && position - 1 < invoiceOptions?.size!!) {
+                        holder.bind(invoiceOptions?.get(position - 1)!!)
+                    }
+
+                }
+            }
             holder.itemView.setOnClickListener {
 
             }
@@ -207,10 +263,19 @@ class OrderStatusDetailActivity : AppCompatActivity() {
         class ViewHolder(private val view: View, val context: Context) :
             RecyclerView.ViewHolder(view) {
 
-
-            fun bind(item: Any) {
+            fun bind(item: InvoiceDetailOption) {
                 with(view) {
+                    invoice_detail_item_option_name.text = item.name
+                    invoice_detail_item_option_order.text = item.order.toString()
+                }
 
+
+            }
+
+            fun bind(item: Option) {
+                with(view) {
+                    invoice_detail_item_option_name.text = item.name
+                    invoice_detail_item_option_order.text = item.order.toString()
                 }
 
 
