@@ -3,13 +3,9 @@ package com.noavaranpishroensheab.kalabum;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public abstract class SignUpResponse {
 
-    @Expose
-    @SerializedName("debug")
-    private List<String> debug;
+
     @Expose
     @SerializedName("data")
     private Data data;
@@ -25,14 +21,6 @@ public abstract class SignUpResponse {
     @Expose
     @SerializedName("success")
     private boolean success;
-
-    public List<String> getDebug() {
-        return debug;
-    }
-
-    public void setDebug(List<String> debug) {
-        this.debug = debug;
-    }
 
     public Data getData() {
         return data;
@@ -76,47 +64,83 @@ public abstract class SignUpResponse {
 
     public static class Data {
         @Expose
-        @SerializedName("password")
-        private List<String> password;
+        @SerializedName("user")
+        private User user;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+    }
+
+    public static class User {
+        @Expose
+        @SerializedName("id")
+        private int id;
+        @Expose
+        @SerializedName("created_at")
+        private String created_at;
+        @Expose
+        @SerializedName("updated_at")
+        private String updated_at;
         @Expose
         @SerializedName("last_name")
-        private List<String> last_name;
+        private String last_name;
         @Expose
         @SerializedName("first_name")
-        private List<String> first_name;
+        private String first_name;
         @Expose
         @SerializedName("phone_number")
-        private List<String> phone_number;
+        private String phone_number;
 
-        public List<String> getPassword() {
-            return password;
+        public int getId() {
+            return id;
         }
 
-        public void setPassword(List<String> password) {
-            this.password = password;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public List<String> getLast_name() {
+        public String getCreated_at() {
+            return created_at;
+        }
+
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
+        }
+
+        public String getUpdated_at() {
+            return updated_at;
+        }
+
+        public void setUpdated_at(String updated_at) {
+            this.updated_at = updated_at;
+        }
+
+        public String getLast_name() {
             return last_name;
         }
 
-        public void setLast_name(List<String> last_name) {
+        public void setLast_name(String last_name) {
             this.last_name = last_name;
         }
 
-        public List<String> getFirst_name() {
+        public String getFirst_name() {
             return first_name;
         }
 
-        public void setFirst_name(List<String> first_name) {
+        public void setFirst_name(String first_name) {
             this.first_name = first_name;
         }
 
-        public List<String> getPhone_number() {
+        public String getPhone_number() {
             return phone_number;
         }
 
-        public void setPhone_number(List<String> phone_number) {
+        public void setPhone_number(String phone_number) {
             this.phone_number = phone_number;
         }
     }
