@@ -369,6 +369,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/activity_order_detail_expire_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

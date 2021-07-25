@@ -30,9 +30,9 @@ data class InvoiceDetailInvoice(
     @SerializedName("notification_text")
     val notificationText: String,
     @SerializedName("offline_payments")
-    val offlinePayments: List<OfflinePayment>,
+    val offlinePayments: List<Any>,
     @SerializedName("online_payments")
-    val onlinePayments: List<InvoiceDetailOnlinePayment>,
+    val onlinePayments: List<Any>,
     @SerializedName("payment_method")
     val paymentMethod: Int,
     @SerializedName("payment_url")
@@ -71,7 +71,7 @@ data class InvoiceDetailItem(
     @SerializedName("notes")
     val notes: String,
     @SerializedName("options")
-    val options: InvoiceDetailOptions,
+    val options: Any,
     @SerializedName("price_per_unit")
     val pricePerUnit: Int,
     @SerializedName("product")
@@ -82,63 +82,6 @@ data class InvoiceDetailItem(
     val unit: String,
     @SerializedName("updated_at")
     val updatedAt: String
-)
-
-data class OfflinePayment(
-    @SerializedName("acc_num")
-    val accNum: String,
-    @SerializedName("amount")
-    val amount: Int,
-    @SerializedName("bank_name")
-    val bankName: String,
-    @SerializedName("created_at")
-    val createdAt: String,
-    @SerializedName("date")
-    val date: String,
-    @SerializedName("IBAN")
-    val iBAN: Any,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("invoice_id")
-    val invoiceId: Int,
-    @SerializedName("RRN")
-    val rRN: String,
-    @SerializedName("receipt_image")
-    val receiptImage: String,
-    @SerializedName("updated_at")
-    val updatedAt: String,
-    @SerializedName("verified")
-    val verified: Boolean,
-    @SerializedName("verified_by")
-    val verifiedBy: Int
-)
-
-data class InvoiceDetailOnlinePayment(
-    @SerializedName("amount")
-    val amount: Int,
-    @SerializedName("authorize")
-    val authorize: String,
-    @SerializedName("date_time")
-    val dateTime: String,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("invoice_id")
-    val invoiceId: Int,
-    @SerializedName("pan")
-    val pan: String,
-    @SerializedName("RRN")
-    val rRN: String,
-    @SerializedName("success")
-    val success: Boolean,
-    @SerializedName("verified")
-    val verified: Boolean
-)
-
-data class InvoiceDetailOptions(
-    @SerializedName("رنگ")
-    val رنگ: String,
-    @SerializedName("سایز")
-    val سایز: String
 )
 
 data class InvoiceDetailProduct(

@@ -95,6 +95,7 @@ class OrderStatusDetailActivity : AppCompatActivity() {
                 order_status_detail_main_title_number.text = it.data.invoice.id.toString()
                 order_status_detail_main_title.text = "پیش فاکتور"
                 activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
+                activity_order_detail_expire_date.text = it.data.invoice.validUntil
                 order_status_recycler.adapter = InvoiceAdapter(this, it.data.invoice.items)
             }
 
@@ -111,6 +112,7 @@ class OrderStatusDetailActivity : AppCompatActivity() {
                 order_status_detail_main_title_number.text = it.data.invoice.id.toString()
                 order_status_detail_main_title.text = "فاکتور"
                 activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
+                activity_order_detail_expire_date.text = it.data.invoice.validUntil
                 order_status_recycler.adapter = InvoiceAdapter(this, null, it.data.invoice.items)
 
 
