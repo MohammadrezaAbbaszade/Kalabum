@@ -1,10 +1,7 @@
 package com.noavaranpishroensheab.kalabum.service
 
 import com.noavaranpishroensheab.kalabum.*
-import com.noavaranpishroensheab.kalabum.response.FactorDetailResponse
-import com.noavaranpishroensheab.kalabum.response.FactorListResponse
-import com.noavaranpishroensheab.kalabum.response.InvoiceDetailResponse
-import com.noavaranpishroensheab.kalabum.response.InvoiceListResponse
+import com.noavaranpishroensheab.kalabum.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -70,4 +67,12 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("id") invoiceId: Int
     ): Call<InvoiceDetailResponse>
+
+
+    @GET("requests")
+    fun getRequests(@Header("Authorization") token: String): Call<RequestListResponse>
+
+
+    @GET("requests/{id}")
+    fun getRequestDetail(@Header("Authorization") token: String, @Path("id") invoiceId: Int):Call<RequestDetailResponse>
 }
