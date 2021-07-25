@@ -37,7 +37,7 @@ class SignUpActivity : AppCompatActivity() {
                     finish()
                 } else {
                     SharePreferenceData.setLoginResult(this, false)
-                    Toast.makeText(this, it.data.phone_number.get(0), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             } else {
                 SharePreferenceData.setLoginResult(this, false)
