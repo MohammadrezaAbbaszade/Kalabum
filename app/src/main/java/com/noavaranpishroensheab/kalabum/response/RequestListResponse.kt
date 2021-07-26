@@ -55,7 +55,11 @@ data class RequestListDataX(
     @SerializedName("id")
     val id: Int,
     @SerializedName("payment_url")
-    val paymentUrl: String
+    val paymentUrl: String,
+    @SerializedName("status")
+    val status: String,
+    @SerializedName("valid")
+    val valid: Boolean
 )
 
 data class RequestListLink(

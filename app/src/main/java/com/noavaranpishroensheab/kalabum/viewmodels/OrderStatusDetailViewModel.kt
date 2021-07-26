@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.noavaranpishroensheab.kalabum.response.FactorDetailResponse
 import com.noavaranpishroensheab.kalabum.response.InvoiceDetailResponse
 import com.noavaranpishroensheab.kalabum.response.InvoiceListResponse
+import com.noavaranpishroensheab.kalabum.response.RequestDetailResponse
 import com.noavaranpishroensheab.kalabum.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,6 +15,7 @@ import retrofit2.Response
 class OrderStatusDetailViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var mInvoiceDetailInfo: MutableLiveData<InvoiceDetailResponse>
     lateinit var mFactorDetailInfo: MutableLiveData<FactorDetailResponse>
+    lateinit var mRequestDetailInfo: MutableLiveData<RequestDetailResponse>
 
 
 
@@ -26,6 +28,7 @@ class OrderStatusDetailViewModel(application: Application) : AndroidViewModel(ap
 
         mInvoiceDetailInfo = MutableLiveData()
         mFactorDetailInfo = MutableLiveData()
+        mRequestDetailInfo = MutableLiveData()
 
         mApi.getPreInvoiceDetail(token, id).enqueue(object : Callback<InvoiceDetailResponse> {
 
@@ -57,6 +60,7 @@ class OrderStatusDetailViewModel(application: Application) : AndroidViewModel(ap
     fun getFactorDetail(token: String, id: Int): MutableLiveData<FactorDetailResponse> {
         mInvoiceDetailInfo = MutableLiveData()
         mFactorDetailInfo = MutableLiveData()
+        mRequestDetailInfo = MutableLiveData()
 
         mApi.getInvoiceDetail(token, id).enqueue(object : Callback<FactorDetailResponse> {
 
@@ -85,4 +89,36 @@ class OrderStatusDetailViewModel(application: Application) : AndroidViewModel(ap
     }
 
 
+
+    fun getRequestDetail(token: String, id: Int): MutableLiveData<RequestDetailResponse> {
+        mInvoiceDetailInfo = MutableLiveData()
+        mFactorDetailInfo = MutableLiveData()
+        mRequestDetailInfo = MutableLiveData()
+
+        mApi.getRequestDetail(token, id).enqueue(object : Callback<RequestDetailResponse> {
+
+            override fun onResponse(
+                call: Call<RequestDetailResponse>,
+                response: Response<RequestDetailResponse>
+            ) {
+               if(response.isSuccessful){
+                   mRequestDetailInfo.value=response.body()
+               }else{
+                   mRequestDetailInfo.value = null
+                   call.cancel()
+               }
+            }
+
+
+            override fun onFailure(call: Call<RequestDetailResponse>, t: Throwable) {
+                mRequestDetailInfo.value = null
+                call.cancel()
+            }
+
+
+
+        })
+
+        return mRequestDetailInfo
+    }
 }

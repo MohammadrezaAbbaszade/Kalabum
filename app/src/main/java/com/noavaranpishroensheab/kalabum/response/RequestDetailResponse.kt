@@ -1,4 +1,5 @@
 package com.noavaranpishroensheab.kalabum.response
+
 import com.google.gson.annotations.SerializedName
 
 
@@ -48,7 +49,7 @@ data class RequestDetailInvoice(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("valid")
-    val valid: Int,
+    val valid: Boolean,
     @SerializedName("valid_until")
     val validUntil: String
 )
@@ -81,10 +82,8 @@ data class RequestDetailItem(
 )
 
 data class Options(
-    @SerializedName("رنگ")
-    val رنگ: String,
-    @SerializedName("سایز")
-    val سایز: String
+    @SerializedName("آپشن 1")
+    val آپشن1: String
 )
 
 data class RequestDetailProduct(

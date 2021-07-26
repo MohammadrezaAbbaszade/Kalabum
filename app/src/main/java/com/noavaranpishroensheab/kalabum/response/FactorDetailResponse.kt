@@ -23,6 +23,8 @@ data class FactorDetailData(
 data class Invoice(
     @SerializedName("created_at")
     val createdAt: String,
+    @SerializedName("delivery")
+    val delivery: Int,
     @SerializedName("id")
     val id: Int,
     @SerializedName("items")
@@ -43,6 +45,8 @@ data class Invoice(
     val smsText: String,
     @SerializedName("status")
     val status: String,
+    @SerializedName("status_code")
+    val statusCode: Int,
     @SerializedName("total_price")
     val totalPrice: Int,
     @SerializedName("type")
@@ -52,7 +56,7 @@ data class Invoice(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("valid")
-    val valid: Int,
+    val valid: Boolean,
     @SerializedName("valid_until")
     val validUntil: String
 )
@@ -71,7 +75,7 @@ data class Item(
     @SerializedName("notes")
     val notes: String,
     @SerializedName("options")
-    val options: List<Any>,
+    val options: Any,
     @SerializedName("price_per_unit")
     val pricePerUnit: Int,
     @SerializedName("product")

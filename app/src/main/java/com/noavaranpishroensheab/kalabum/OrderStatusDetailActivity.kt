@@ -77,8 +77,9 @@ class OrderStatusDetailActivity : AppCompatActivity() {
             }
             3 -> {
 
-                end_factor_info.visibility = View.VISIBLE
-                end_factor_bottom_view.visibility = View.VISIBLE
+                orderStatusDetailViewModel.getRequestDetail(
+                    SharePreferenceData.getToken(this).toString(), id
+                )
             }
 
         }
@@ -88,14 +89,22 @@ class OrderStatusDetailActivity : AppCompatActivity() {
             if (it != null) {
                 order_status_detail_progressbar.visibility = View.GONE
                 order_status_detail_title.visibility = View.VISIBLE
-                ready_factor_bottom_view.visibility = View.VISIBLE
-                ready_factor_info.visibility = View.VISIBLE
+                if (it.data.invoice.valid) {
+                    ready_factor_info.visibility = View.VISIBLE
+                    expired_normal_text.text = it.data.invoice.validUntil
+                    activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
+                    activity_order_detail_expire_date.text = it.data.invoice.validUntil
+                    ready_factor_bottom_view.visibility = View.VISIBLE
+                } else {
+                    end_factor_info.visibility = View.VISIBLE
+                    activity_order_detail_end_factor_date.text = it.data.invoice.validUntil
+                    end_factor_bottom_view.visibility = View.VISIBLE
+                }
 
-                expired_normal_text.text = it.data.invoice.validUntil
+
                 order_status_detail_main_title_number.text = it.data.invoice.id.toString()
                 order_status_detail_main_title.text = "پیش فاکتور"
-                activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
-                activity_order_detail_expire_date.text = it.data.invoice.validUntil
+
                 order_status_recycler.adapter = InvoiceAdapter(this, it.data.invoice.items)
             }
 
@@ -108,18 +117,115 @@ class OrderStatusDetailActivity : AppCompatActivity() {
             if (it != null) {
                 order_status_detail_progressbar.visibility = View.GONE
                 order_status_detail_title.visibility = View.VISIBLE
-                ready_factor_bottom_view.visibility = View.VISIBLE
                 order_status_detail_main_title_number.text = it.data.invoice.id.toString()
                 order_status_detail_main_title.text = "فاکتور"
-                activity_order_detail_total_price.text = it.data.invoice.totalPrice.toString()
-                activity_order_detail_expire_date.text = it.data.invoice.validUntil
                 order_status_recycler.adapter = InvoiceAdapter(this, null, it.data.invoice.items)
+            }
+
+
+        })
+
+
+
+        orderStatusDetailViewModel.mRequestDetailInfo.observe(this, Observer {
+
+            if (it != null) {
+                order_status_detail_progressbar.visibility = View.GONE
+                order_status_detail_title.visibility = View.VISIBLE
+                comming_soon_factor_bottom_view.visibility = View.VISIBLE
+                order_status_detail_main_title_number.text = it.data.invoice.id.toString()
+                order_status_detail_main_title.text = "درخواست"
+                order_status_recycler.adapter = RequestAdapter(this, it.data.invoice.items)
+            }
+
+
+        })
+
+
+    }
+
+    class RequestAdapter(
+        val context: Context,
+        val requestDetailItem: List<RequestDetailItem>
+    ) : RecyclerView.Adapter<RequestAdapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(context)
+                .inflate(R.layout.coming_soon_factor_item, parent, false)
+            return ViewHolder(view, context)
+        }
+
+        override fun getItemCount(): Int {
+            return requestDetailItem.size
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bind(requestDetailItem.get(position))
+            holder.itemView.setOnClickListener {
+
+            }
+        }
+
+
+        class ViewHolder(private val view: View, val context: Context) :
+            RecyclerView.ViewHolder(view) {
+
+
+            fun bind(item: RequestDetailItem) {
+                with(view) {
+                    coming_soon_factor_item_title_txt.text = item.product.name
+                    coming_soon_factor_item_recycler.adapter =
+                        RequestOptionsAdapter(context, item.product.options)
+                }
+
+            }
+
+
+        }
+
+
+    }
+
+
+    class RequestOptionsAdapter(
+        val context: Context,
+        var requestDetailOption: List<RequestDetailOption>
+    ) : RecyclerView.Adapter<RequestOptionsAdapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(context)
+                .inflate(R.layout.coming_soon_factor_options_item, parent, false)
+            return ViewHolder(view, context)
+        }
+
+        override fun getItemCount(): Int {
+            return requestDetailOption.size
+        }
+
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bind(requestDetailOption.get(position))
+            holder.itemView.setOnClickListener {
+
+            }
+        }
+
+
+        class ViewHolder(private val view: View, val context: Context) :
+            RecyclerView.ViewHolder(view) {
+
+            fun bind(item: RequestDetailOption) {
+                with(view) {
+                    coming_soon_factor_item_option_name.text = item.name
+                    coming_soon_factor_item_option_order.text = item.order.toString()
+                }
 
 
             }
 
 
-        })
+        }
+
 
     }
 

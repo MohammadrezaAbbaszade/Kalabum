@@ -52,7 +52,7 @@ data class InvoiceDetailInvoice(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("valid")
-    val valid: Int,
+    val valid: Boolean,
     @SerializedName("valid_until")
     val validUntil: String
 )

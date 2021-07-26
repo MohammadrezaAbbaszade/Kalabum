@@ -15,11 +15,11 @@
 
     <LinearLayout
         android:id="@+id/order_status_detail_title"
-        android:visibility="invisible"
         android:layout_width="342dp"
         android:layout_height="58dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
@@ -74,7 +74,7 @@
         android:background="#AD3D3D"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_status_detail_title">
@@ -92,6 +92,7 @@
             android:textColor="#FFF" />
 
         <TextView
+            android:id="@+id/activity_order_detail_end_factor_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -110,7 +111,7 @@
         android:layout_height="28dp"
         android:layout_marginTop="3dp"
         android:background="#727272"
-       android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_status_detail_title">
@@ -150,6 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/end_factor_info" />
+
     <ProgressBar
         android:id="@+id/order_status_detail_progressbar"
         android:layout_width="wrap_content"
@@ -162,15 +164,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     <LinearLayout
         android:id="@+id/comming_soon_factor_bottom_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -316,7 +316,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-     android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -439,7 +439,6 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_weight="1"
-        android:visibility="gone"
         android:background="#0089D1"
         android:gravity="center"
         android:text="سفارش مجدد!"
@@ -447,6 +446,7 @@
         android:textColor="#FFF"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
